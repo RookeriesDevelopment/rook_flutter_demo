@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rook_flutter_demo/core/presentation/theme/theme.dart';
 import 'package:rook_flutter_demo/core/presentation/theme/util.dart';
+import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_screen.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_screen.dart';
 import 'package:rook_flutter_demo/feature/welcome/presentation/screen/welcome_screen.dart';
 
@@ -29,9 +30,13 @@ class RookFlutterDemo extends StatelessWidget {
 }
 
 final _router = GoRouter(
-  initialLocation: "/login",
+  initialLocation: "/welcome",
   routes: [
     GoRoute(path: '/welcome', builder: (context, state) => WelcomeScreen()),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
+    GoRoute(
+      path: '/connections',
+      builder: (context, state) => ConnectionsScreen(),
+    ),
   ],
 );

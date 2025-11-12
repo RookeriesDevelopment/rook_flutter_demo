@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rook_flutter_demo/core/presentation/extension/build_context_extensions.dart';
 import 'package:rook_flutter_demo/core/presentation/theme/shapes.dart';
 import 'package:rook_flutter_demo/core/presentation/widget/configurable.dart';
@@ -65,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       textInputAction: TextInputAction.done,
                       onSubmitted: (value) {
                         print("submitted: $value");
+                        context.pushReplacement("/connections", extra: true);
                       },
                     ),
                     SizedBox(height: 20),

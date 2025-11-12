@@ -16,4 +16,8 @@ extension BuildContextExtensions on BuildContext {
   bool get isPortrait {
     return MediaQuery.of(this).orientation == Orientation.portrait;
   }
+
+  Size get screenSize {
+    return MediaQuery.of(this).size;
+  }
 }
