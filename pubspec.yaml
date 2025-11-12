@@ -15,6 +15,12 @@ dependencies:
   path_provider_android: 2.2.5
   shared_preferences: ^2.5.3
   shared_preferences_android: 2.3.4
+  rook_sdk_core: ^1.2.0
+  rook_sdk_apple_health: ^1.10.0
+  rook_sdk_health_connect: ^3.3.0
+  receive_intent: ^0.2.7
+  rook_sdk_samsung_health: ^1.1.0
+  device_info_plus: ^12.2.0
 
 dev_dependencies:
   flutter_test:

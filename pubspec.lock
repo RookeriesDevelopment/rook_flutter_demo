@@ -57,6 +57,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  device_info_plus:
+    dependency: "direct main"
+    description:
+      name: device_info_plus
+      sha256: dd0e8e02186b2196c7848c9d394a5fd6e5b57a43a546082c5820b1ec72317e33
+      url: "https://pub.dev"
+    source: hosted
+    version: "12.2.0"
+  device_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: device_info_plus_platform_interface
+      sha256: e1ea89119e34903dca74b883d0dd78eb762814f97fb6c76f35e9ff74d261a18f
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -81,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      sha256: b6dc7065e46c974bc7c5f143080a6764ec7a4be6da1285ececdc37be96de53be
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -272,6 +296,54 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  protobuf:
+    dependency: transitive
+    description:
+      name: protobuf
+      sha256: de9c9eb2c33f8e933a42932fe1dc504800ca45ebc3d673e6ed7f39754ee4053e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.0"
+  receive_intent:
+    dependency: "direct main"
+    description:
+      name: receive_intent
+      sha256: "8e6b6edd1f4127265c1f19bfd53e8e92dd65f32cc9b377247bb7876a655479c8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.7"
+  rook_sdk_apple_health:
+    dependency: "direct main"
+    description:
+      name: rook_sdk_apple_health
+      sha256: "8837abd34e1628d758c179bac4456df14f612fb4b6ceebec8b3a3fbdbcffc776"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.10.0"
+  rook_sdk_core:
+    dependency: "direct main"
+    description:
+      name: rook_sdk_core
+      sha256: "3b0ee512ab273ce6eed56979baffc9905e1ff09f41f121c56da791a927638d23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
+  rook_sdk_health_connect:
+    dependency: "direct main"
+    description:
+      name: rook_sdk_health_connect
+      sha256: "304989d10034a1be3ba561c8fa3096eb765027ba6d1dae762af85007ccc465b3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.0"
+  rook_sdk_samsung_health:
+    dependency: "direct main"
+    description:
+      name: rook_sdk_samsung_health
+      sha256: "64a61d446db30853a23f489c1da81f849a29f534c17e4037c80c4849ec62f4f1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -413,6 +485,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  win32:
+    dependency: transitive
+    description:
+      name: win32
+      sha256: d7cb55e04cd34096cd3a79b3330245f54cb96a370a1c27adb3c84b917de8b08e
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.15.0"
+  win32_registry:
+    dependency: transitive
+    description:
+      name: win32_registry
+      sha256: "6f1b564492d0147b330dd794fee8f512cec4977957f310f9951b5f9d83618dae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   xdg_directories:
     dependency: transitive
     description:

@@ -45,7 +45,10 @@ android {
     }
 
     dependencies {
+        implementation(files("$rootDir/libs/samsung-health-data-api-1.0.0-b2.aar"))
 
+        // Used by Samsung Health Data AAR:
+        implementation("com.google.code.gson:gson:2.13.0")
     }
 }
 
