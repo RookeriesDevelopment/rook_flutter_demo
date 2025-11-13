@@ -8,12 +8,12 @@ import 'package:rook_sdk_samsung_health/rook_sdk_samsung_health.dart';
 class RookHealthRepository {
   RookHealthRepository._();
 
-  static void enableNativeLogs() {
+  static Future<void> enableNativeLogs() async {
     if (Platform.isIOS) {
-      AHRookConfigurationManager.enableNativeLogs();
+      await AHRookConfigurationManager.enableNativeLogs();
     } else {
-      HCRookConfigurationManager.enableNativeLogs();
-      RookSamsung.enableNativeLogs();
+      await HCRookConfigurationManager.enableNativeLogs();
+      await RookSamsung.enableNativeLogs();
     }
   }
 

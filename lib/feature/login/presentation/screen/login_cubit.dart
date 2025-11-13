@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
@@ -40,6 +41,10 @@ class LoginCubit extends Cubit<LoginState> {
     );
 
     try {
+      if (kDebugMode) {
+        await RookHealthRepository.enableNativeLogs();
+      }
+
       await RookHealthRepository.initRook(configuration);
       await RookHealthRepository.updateUserID(userID);
       await _authRepository.login(userID);

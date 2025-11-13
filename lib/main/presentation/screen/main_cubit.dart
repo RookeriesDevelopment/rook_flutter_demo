@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
@@ -41,6 +42,10 @@ class MainCubit extends Cubit<MainState> {
       environment: environment,
       enableBackgroundSync: false,
     );
+
+    if (kDebugMode) {
+      await RookHealthRepository.enableNativeLogs();
+    }
 
     await RookHealthRepository.initRook(configuration).fold(
       (value) async {
