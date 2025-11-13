@@ -20,7 +20,12 @@ dependencies:
   rook_sdk_health_connect: ^3.3.0
   receive_intent: ^0.2.7
   rook_sdk_samsung_health: ^1.1.0
-  device_info_plus: ^12.2.0
+  device_info_plus: ^11.5.0
+  flutter_bloc: ^9.1.1
+  flutter_dotenv: ^6.0.0
+  equatable: ^2.0.7
+  logger: ^2.6.2
+  provider: ^6.1.5+1
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +35,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - .env
     - assets/images/png_login_background.png
     - assets/images/png_apple_health.png
     - assets/images/png_health_connect.png
