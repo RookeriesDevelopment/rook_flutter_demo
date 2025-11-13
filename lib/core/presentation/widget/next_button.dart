@@ -27,3 +27,25 @@ class NextButton extends StatelessWidget {
     );
   }
 }
+
+class NextTextButton extends StatelessWidget {
+  final bool enabled;
+  final void Function() onClick;
+
+  const NextTextButton({
+    super.key,
+    this.enabled = true,
+    required this.onClick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton.icon(
+      style: ButtonStyle(shape: WidgetStatePropertyAll(buttonShape)),
+      onPressed: enabled ? onClick : null,
+      label: Text("Next"),
+      icon: Icon(Icons.arrow_forward),
+      iconAlignment: IconAlignment.end,
+    );
+  }
+}

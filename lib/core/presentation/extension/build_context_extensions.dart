@@ -20,4 +20,12 @@ extension BuildContextExtensions on BuildContext {
   Size get screenSize {
     return MediaQuery.of(this).size;
   }
+
+  void showSnackBar(SnackBar snackBar) {
+    ScaffoldMessenger.of(this).showSnackBar(snackBar);
+  }
+
+  void showTextSnackBar(String text) {
+    ScaffoldMessenger.of(this).showSnackBar(SnackBar(content: Text(text)));
+  }
 }
