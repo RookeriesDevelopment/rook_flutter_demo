@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
               SizedBox(height: 24),
               NextButton(
                 onClick: () {
-                  context.go("/login");
+                  context.pushReplacement("/login");
                 },
               ),
               Spacer(flex: 25),
@@ -80,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                     SizedBox(height: 24),
                     NextButton(
                       onClick: () {
-                        context.go("/login");
+                        context.pushReplacement("/login");
                       },
                     ),
                   ],
