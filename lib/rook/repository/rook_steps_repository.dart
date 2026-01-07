@@ -1,8 +1,22 @@
+import 'dart:io';
+
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
 
 class RookStepsRepository {
   RookStepsRepository._();
+
+  static Future<bool> isCompatibleWithCurrentPlatform() async {
+    if (Platform.isIOS) {
+      return false;
+    } else {
+      try {
+        return await AndroidStepsManager.isAvailable();
+      } catch (ignored) {
+        return false;
+      }
+    }
+  }
 
   static Future<bool> checkAndroidPermissions() {
     return HCRookHealthPermissionsManager.checkAndroidPermissions();

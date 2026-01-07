@@ -3,10 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:rook_flutter_demo/core/data/preferences/default_app_preferences.dart';
 import 'package:rook_flutter_demo/core/data/repository/default_auth_repository.dart';
+import 'package:rook_flutter_demo/core/domain/preferences/app_preferences.dart';
 import 'package:rook_flutter_demo/core/domain/repository/auth_repository.dart';
 import 'package:rook_flutter_demo/core/presentation/theme/theme.dart';
 import 'package:rook_flutter_demo/core/presentation/theme/util.dart';
+import 'package:rook_flutter_demo/feature/androidsteps/presentation/screen/android_steps_cubit.dart';
+import 'package:rook_flutter_demo/feature/androidsteps/presentation/screen/android_steps_screen.dart';
+import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_cubit.dart';
 import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_screen.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_cubit.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_screen.dart';
@@ -30,7 +35,10 @@ class RookFlutterDemo extends StatelessWidget {
     final materialTheme = MaterialTheme(textTheme);
 
     return MultiProvider(
-      providers: [Provider<Logger>(create: (context) => Logger())],
+      providers: [
+        Provider<Logger>(create: (context) => Logger()),
+        Provider<AppPreferences>(create: (context) => DefaultAppPreferences()),
+      ],
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<AuthRepository>(
@@ -50,7 +58,7 @@ class RookFlutterDemo extends StatelessWidget {
 }
 
 final _router = GoRouter(
-  initialLocation: "/",
+  initialLocation: "/connections",
   routes: [
     GoRoute(
       path: '/',
@@ -75,7 +83,12 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: '/connections',
-      builder: (context, state) => ConnectionsScreen(),
+      builder: (context, state) => BlocProvider(
+        create: (context) {
+          return ConnectionsCubit(preferences: context.read<AppPreferences>());
+        },
+        child: ConnectionsScreen(),
+      ),
     ),
   ],
 );

@@ -1,7 +1,11 @@
 PODS:
+  - app_settings (5.1.1):
+    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - Flutter (1.0.0)
+  - flutter_custom_tabs_ios (2.4.0):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -16,8 +20,10 @@ PODS:
   - SwiftProtobuf (1.28.2)
 
 DEPENDENCIES:
+  - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
+  - flutter_custom_tabs_ios (from `.symlinks/plugins/flutter_custom_tabs_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - rook_sdk_apple_health (from `.symlinks/plugins/rook_sdk_apple_health/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -28,10 +34,14 @@ SPEC REPOS:
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
+  app_settings:
+    :path: ".symlinks/plugins/app_settings/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   Flutter:
     :path: Flutter
+  flutter_custom_tabs_ios:
+    :path: ".symlinks/plugins/flutter_custom_tabs_ios/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   rook_sdk_apple_health:
@@ -40,8 +50,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
+  app_settings: 58017cd26b604ae98c3e65acbdd8ba173703cc82
   device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  flutter_custom_tabs_ios: 89e60122b553c69a79bfd45eb8eb99d911c1a9c0
   path_provider_foundation: 0b743cbb62d8e47eab856f09262bb8c1ddcfe6ba
   rook_sdk_apple_health: b4f197b0afbc16b770a82e2e16998c3fe0658de2
   RookSDK: de797be1368ce84cc2285b543e2b67ad2518e9d0

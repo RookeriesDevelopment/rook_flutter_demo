@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:rook_flutter_demo/feature/login/domain/enum/login_error.dart';
 
+// TODO: Make error non nullable
 class LoginState extends Equatable {
   final bool loading;
   final bool loggedIn;

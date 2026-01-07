@@ -1,9 +1,23 @@
+import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 import 'package:rook_sdk_samsung_health/rook_sdk_samsung_health.dart';
 
 class RookSamsungHealthRepository {
   RookSamsungHealthRepository._();
+
+  static Future<bool> isCompatibleWithCurrentPlatform() async {
+    if (Platform.isIOS) {
+      return false;
+    } else {
+      try {
+        return await isCompatible();
+      } catch (ignored) {
+        return false;
+      }
+    }
+  }
 
   static Future<bool> isCompatible() async {
     final deviceInfo = DeviceInfoPlugin();

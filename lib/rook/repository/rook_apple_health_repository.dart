@@ -1,8 +1,18 @@
+import 'dart:io';
+
 import 'package:rook_sdk_apple_health/rook_sdk_apple_health.dart';
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 
 class RookAppleHealthRepository {
   RookAppleHealthRepository._();
+
+  static Future<bool> isCompatibleWithCurrentPlatform() async {
+    if (Platform.isIOS) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   static Future<void> requestPermissions(
     List<AppleHealthPermission> permissions,

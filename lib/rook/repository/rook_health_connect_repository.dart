@@ -1,8 +1,24 @@
+import 'dart:io';
+
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
 
 class RookHealthConnectRepository {
   RookHealthConnectRepository._();
+
+  static Future<bool> isCompatibleWithCurrentPlatform() async {
+    if (Platform.isIOS) {
+      return false;
+    } else {
+      try {
+        final healthConnectAvailability =
+            await RookHealthConnectRepository.checkHealthConnectAvailability();
+        return healthConnectAvailability != HCAvailabilityStatus.notSupported;
+      } catch (ignored) {
+        return false;
+      }
+    }
+  }
 
   static Future<HCAvailabilityStatus> checkHealthConnectAvailability() {
     return HCRookHealthPermissionsManager.checkHealthConnectAvailability();

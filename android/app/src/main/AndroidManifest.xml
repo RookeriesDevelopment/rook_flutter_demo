@@ -21,9 +21,27 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Open app after API connection">
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+
+                <data android:host="main.d1kx6n00xlijg7.amplifyapp.com" />
+
+                <data android:pathPrefix="/open-app" />
             </intent-filter>
 
             <!-- For supported versions through Android 13, create an activity to show the rationale

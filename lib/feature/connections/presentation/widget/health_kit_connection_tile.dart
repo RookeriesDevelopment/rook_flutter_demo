@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:rook_flutter_demo/feature/connections/domain/model/connection.dart';
 import 'package:rook_flutter_demo/feature/connections/presentation/widget/connection_button.dart';
 
-class ApiConnectionTile extends StatelessWidget {
-  final ConnectionApi connection;
+class HealthKitConnectionTile extends StatelessWidget {
+  final ConnectionHealthKit connection;
   final bool loading;
   final void Function() onConnect;
   final void Function() onDisconnect;
 
-  const ApiConnectionTile({
+  const HealthKitConnectionTile({
     super.key,
     required this.connection,
     required this.loading,
@@ -20,7 +20,7 @@ class ApiConnectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: ClipOval(
-        child: Image.network(connection.iconUrl, width: 40, height: 40),
+        child: Image.asset(connection.iconName, width: 40, height: 40),
       ),
       title: Text(connection.name),
       trailing: ConnectionButton(

@@ -19,7 +19,7 @@ class PostSplashScreen extends StatelessWidget {
             case AuthenticationStatus.unknown:
               context.read<Logger>().d("Loading authentication status...");
             case AuthenticationStatus.authenticated:
-              context.pushReplacement("/welcome");
+              context.pushReplacement("/connections");
             case AuthenticationStatus.unauthenticated:
               context.pushReplacement("/welcome");
           }
