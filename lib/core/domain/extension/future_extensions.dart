@@ -10,4 +10,12 @@ extension FutureExtensions<T, R> on Future<T> {
       return onFailure(error);
     }
   }
+
+  Future<T> getOrDefault(T defaultValue) async {
+    try {
+      return await this;
+    } catch (error) {
+      return defaultValue;
+    }
+  }
 }

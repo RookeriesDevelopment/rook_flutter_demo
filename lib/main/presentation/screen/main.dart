@@ -41,15 +41,11 @@ class RookFlutterDemo extends StatelessWidget {
       ],
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<AuthRepository>(
-            create: (context) => DefaultAuthRepository(),
-          ),
+          RepositoryProvider<AuthRepository>(create: (context) => DefaultAuthRepository()),
         ],
         child: MaterialApp.router(
           title: 'RookFlutter',
-          theme: brightness == Brightness.light
-              ? materialTheme.light()
-              : materialTheme.dark(),
+          theme: brightness == Brightness.light ? materialTheme.light() : materialTheme.dark(),
           routerConfig: _router,
         ),
       ),
@@ -89,6 +85,11 @@ final _router = GoRouter(
         },
         child: ConnectionsScreen(),
       ),
+    ),
+    GoRoute(
+      path: '/connections/android-steps',
+      builder: (context, state) =>
+          BlocProvider(create: (context) => AndroidStepsCubit(), child: AndroidStepsScreen()),
     ),
   ],
 );
