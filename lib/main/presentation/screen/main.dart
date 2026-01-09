@@ -11,6 +11,8 @@ import 'package:rook_flutter_demo/core/presentation/theme/theme.dart';
 import 'package:rook_flutter_demo/core/presentation/theme/util.dart';
 import 'package:rook_flutter_demo/feature/androidsteps/presentation/screen/android_steps_cubit.dart';
 import 'package:rook_flutter_demo/feature/androidsteps/presentation/screen/android_steps_screen.dart';
+import 'package:rook_flutter_demo/feature/applehealth/presentation/screen/apple_health_cubit.dart';
+import 'package:rook_flutter_demo/feature/applehealth/presentation/screen/apple_health_screen.dart';
 import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_cubit.dart';
 import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_screen.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_cubit.dart';
@@ -90,6 +92,18 @@ final _router = GoRouter(
       path: '/connections/android-steps',
       builder: (context, state) =>
           BlocProvider(create: (context) => AndroidStepsCubit(), child: AndroidStepsScreen()),
+    ),
+    GoRoute(
+      path: '/connections/apple-health',
+      builder: (context, state) => BlocProvider(
+        create: (context) {
+          return AppleHealthCubit(
+            preferences: context.read<AppPreferences>(),
+            logger: context.read<Logger>(),
+          );
+        },
+        child: AppleHealthScreen(),
+      ),
     ),
   ],
 );

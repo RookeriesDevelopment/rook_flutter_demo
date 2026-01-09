@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rook_sdk_apple_health/rook_sdk_apple_health.dart';
 import 'package:rook_sdk_core/rook_sdk_core.dart';
 
@@ -14,9 +15,7 @@ class RookAppleHealthRepository {
     }
   }
 
-  static Future<void> requestPermissions(
-    List<AppleHealthPermission> permissions,
-  ) {
+  static Future<void> requestPermissions(List<AppleHealthPermission> permissions) {
     return AHRookHealthPermissionsManager.requestPermissions(permissions);
   }
 
@@ -28,10 +27,7 @@ class RookAppleHealthRepository {
     return AHRookSyncManager.sync(date: date);
   }
 
-  static Future<void> syncByDateAndSummary(
-    DateTime date,
-    AHSummarySyncType summary,
-  ) {
+  static Future<void> syncByDateAndSummary(DateTime date, AHSummarySyncType summary) {
     return AHRookSyncManager.sync(date: date, summary: summary);
   }
 
@@ -67,12 +63,16 @@ class RookAppleHealthRepository {
     return AHRookBackgroundSync.isScheduled();
   }
 
-  static Future<void> enableBackground(
-    bool enableNativeLogs,
-    String clientUUID,
-    String secretKey,
-    RookEnvironment environment,
-  ) {
+  static Future<void> enableBackground(bool enableNativeLogs) async {
+    await dotenv.load();
+    final clientUUID = dotenv.env['clientUUID'];
+    final secretKey = dotenv.env['secretKey'];
+    final environment = RookEnvironment.sandbox;
+
+    if (clientUUID == null || secretKey == null) {
+      throw Exception("Missing environment variables: clientUUID, secretKey");
+    }
+
     return AHRookBackgroundSync.enableBackground(
       enableNativeLogs: enableNativeLogs,
       clientUUID: clientUUID,
