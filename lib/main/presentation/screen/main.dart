@@ -15,20 +15,24 @@ import 'package:rook_flutter_demo/feature/applehealth/presentation/screen/apple_
 import 'package:rook_flutter_demo/feature/applehealth/presentation/screen/apple_health_screen.dart';
 import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_cubit.dart';
 import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_screen.dart';
+import 'package:rook_flutter_demo/feature/healthconnect/presentation/screen/health_connect_cubit.dart';
+import 'package:rook_flutter_demo/feature/healthconnect/presentation/screen/health_connect_screen.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_cubit.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_screen.dart';
 import 'package:rook_flutter_demo/feature/postsplash/presentation/screen/post_splash_screen.dart';
+import 'package:rook_flutter_demo/feature/samsunghealth/presentation/screen/samsung_health_cubit.dart';
+import 'package:rook_flutter_demo/feature/samsunghealth/presentation/screen/samsung_health_screen.dart';
 import 'package:rook_flutter_demo/feature/welcome/presentation/screen/welcome_screen.dart';
 import 'package:rook_flutter_demo/main/presentation/screen/main_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const RookFlutterDemo());
+  runApp(const DemoApp());
 }
 
-class RookFlutterDemo extends StatelessWidget {
-  const RookFlutterDemo({super.key});
+class DemoApp extends StatelessWidget {
+  const DemoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,64 +50,88 @@ class RookFlutterDemo extends StatelessWidget {
           RepositoryProvider<AuthRepository>(create: (context) => DefaultAuthRepository()),
         ],
         child: MaterialApp.router(
-          title: 'RookFlutter',
+          title: 'DemoApp',
           theme: brightness == Brightness.light ? materialTheme.light() : materialTheme.dark(),
-          routerConfig: _router,
+          routerConfig: GoRouter(
+            initialLocation: "/",
+            routes: [
+              GoRoute(
+                path: '/',
+                builder: (context, state) => BlocProvider<MainCubit>(
+                  create: (context) {
+                    return MainCubit(
+                      logger: context.read<Logger>(),
+                      authRepository: context.read<AuthRepository>(),
+                    );
+                  },
+                  child: PostSplashScreen(),
+                ),
+              ),
+              GoRoute(path: '/welcome', builder: (context, state) => WelcomeScreen()),
+              GoRoute(
+                path: '/login',
+                builder: (context, state) => BlocProvider(
+                  create: (context) {
+                    return LoginCubit(
+                      logger: context.read<Logger>(),
+                      authRepository: context.read<AuthRepository>(),
+                    );
+                  },
+                  child: LoginScreen(),
+                ),
+              ),
+              GoRoute(
+                path: '/connections',
+                builder: (context, state) => BlocProvider(
+                  create: (context) {
+                    return ConnectionsCubit(preferences: context.read<AppPreferences>());
+                  },
+                  child: ConnectionsScreen(),
+                ),
+              ),
+              GoRoute(
+                path: '/connections/android-steps',
+                builder: (context, state) => BlocProvider(
+                  create: (context) {
+                    return AndroidStepsCubit();
+                  },
+                  child: AndroidStepsScreen(),
+                ),
+              ),
+              GoRoute(
+                path: '/connections/health-connect',
+                builder: (context, state) => BlocProvider(
+                  create: (context) {
+                    return HealthConnectCubit(preferences: context.read<AppPreferences>());
+                  },
+                  child: HealthConnectScreen(),
+                ),
+              ),
+              GoRoute(
+                path: '/connections/samsung-health',
+                builder: (context, state) => BlocProvider(
+                  create: (context) {
+                    return SamsungHealthCubit(preferences: context.read<AppPreferences>());
+                  },
+                  child: SamsungHealthScreen(),
+                ),
+              ),
+              GoRoute(
+                path: '/connections/apple-health',
+                builder: (context, state) => BlocProvider(
+                  create: (context) {
+                    return AppleHealthCubit(
+                      preferences: context.read<AppPreferences>(),
+                      logger: context.read<Logger>(),
+                    );
+                  },
+                  child: AppleHealthScreen(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-final _router = GoRouter(
-  initialLocation: "/connections",
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => BlocProvider<MainCubit>(
-        create: (context) => MainCubit(
-          logger: context.read<Logger>(),
-          authRepository: context.read<AuthRepository>(),
-        ),
-        child: PostSplashScreen(),
-      ),
-    ),
-    GoRoute(path: '/welcome', builder: (context, state) => WelcomeScreen()),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => BlocProvider(
-        create: (context) => LoginCubit(
-          logger: context.read<Logger>(),
-          authRepository: context.read<AuthRepository>(),
-        ),
-        child: LoginScreen(),
-      ),
-    ),
-    GoRoute(
-      path: '/connections',
-      builder: (context, state) => BlocProvider(
-        create: (context) {
-          return ConnectionsCubit(preferences: context.read<AppPreferences>());
-        },
-        child: ConnectionsScreen(),
-      ),
-    ),
-    GoRoute(
-      path: '/connections/android-steps',
-      builder: (context, state) =>
-          BlocProvider(create: (context) => AndroidStepsCubit(), child: AndroidStepsScreen()),
-    ),
-    GoRoute(
-      path: '/connections/apple-health',
-      builder: (context, state) => BlocProvider(
-        create: (context) {
-          return AppleHealthCubit(
-            preferences: context.read<AppPreferences>(),
-            logger: context.read<Logger>(),
-          );
-        },
-        child: AppleHealthScreen(),
-      ),
-    ),
-  ],
-);
