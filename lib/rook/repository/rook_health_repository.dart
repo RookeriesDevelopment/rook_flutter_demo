@@ -20,7 +20,7 @@ class RookHealthRepository {
   static Future<void> initRook(RookConfiguration configuration) async {
     if (Platform.isIOS) {
       await AHRookConfigurationManager.setConfiguration(configuration);
-      return AHRookConfigurationManager.initRook();
+      await AHRookConfigurationManager.initRook();
     } else {
       await HCRookConfigurationManager.setConfiguration(configuration);
       await HCRookConfigurationManager.initRook();
@@ -49,7 +49,7 @@ class RookHealthRepository {
 
   static Future<void> updateUserID(String userID) async {
     if (Platform.isIOS) {
-      return AHRookConfigurationManager.updateUserID(userID);
+      await AHRookConfigurationManager.updateUserID(userID);
     } else {
       await HCRookConfigurationManager.updateUserID(userID);
       await RookSamsung.updateUserID(userID);
@@ -58,7 +58,7 @@ class RookHealthRepository {
 
   static Future<void> syncUserTimeZone() async {
     if (Platform.isIOS) {
-      return AHRookConfigurationManager.syncUserTimeZone();
+      await AHRookConfigurationManager.syncUserTimeZone();
     } else {
       await HCRookConfigurationManager.syncUserTimeZone();
       await RookSamsung.syncUserTimeZone();
@@ -76,7 +76,7 @@ class RookHealthRepository {
 
   static Future<void> deleteUserFromRook() async {
     if (Platform.isIOS) {
-      return AHRookConfigurationManager.deleteUserFromRook();
+      await AHRookConfigurationManager.deleteUserFromRook();
     } else {
       await HCRookConfigurationManager.deleteUserFromRook();
       await RookSamsung.deleteUserFromRook();
