@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -117,6 +119,10 @@ class _DemoAppState extends State<DemoApp> {
   }
 
   Future<void> _handleIntent() async {
+    if (!Platform.isAndroid) {
+      return;
+    }
+
     final receivedIntent = await ReceiveIntent.getInitialIntent();
     final action = receivedIntent?.action;
 
