@@ -10,10 +10,10 @@ import 'package:rook_flutter_demo/rook/repository/rook_steps_repository.dart';
 
 final class SummariesCubit extends Cubit<SummariesState> {
   SummariesCubit() : super(SummariesState()) {
-    onRefreshSummaries();
+    onSummariesRefresh();
   }
 
-  void onRefreshSummaries() {
+  void onSummariesRefresh() {
     _loadSummaries();
   }
 
@@ -78,7 +78,7 @@ final class SummariesCubit extends Cubit<SummariesState> {
     final sleepDurationInHours = await RookHealthConnectRepository.getSleepSummary(today).then((
       summaries,
     ) {
-// Get total sleep duration by adding all sleep durations
+      // Get total sleep duration by adding all sleep durations
       final totalDurationInHours = summaries.fold(0.0, (previousValue, element) {
         final durationInSeconds = element.sleepDurationSeconds?.toDouble() ?? 0.0;
         final durationInHours = durationInSeconds / _secondsInAnHour;
@@ -129,7 +129,7 @@ final class SummariesCubit extends Cubit<SummariesState> {
     final sleepDurationInHours = await RookSamsungHealthRepository.getSleepSummary(today).then((
       summaries,
     ) {
-// Get total sleep duration by adding all sleep durations
+      // Get total sleep duration by adding all sleep durations
       final totalDurationInHours = summaries.fold(0.0, (previousValue, element) {
         final durationInSeconds = element.sleepDurationSeconds?.toDouble() ?? 0.0;
         final durationInHours = durationInSeconds / _secondsInAnHour;
@@ -164,7 +164,7 @@ final class SummariesCubit extends Cubit<SummariesState> {
 
     final today = DateTime.now();
 
-    final stepsCount = (await RookAppleHealthRepository.getTodayStepsCount()) ?? 0;
+    final stepsCount = await RookAppleHealthRepository.getTodayStepsCount().getOrDefault(0) ?? 0;
 
     final caloriesCount = await RookAppleHealthRepository.getTodayCaloriesCount().then((calories) {
       if (calories == null) {
@@ -173,7 +173,7 @@ final class SummariesCubit extends Cubit<SummariesState> {
 
       // Get total calories by adding active and basal calories
       return (calories.active + calories.basal).round();
-    });
+    }).getOrDefault(0);
 
     final sleepDurationInHours = await RookAppleHealthRepository.getSleepSummary(today).then((
       summaries,
@@ -186,7 +186,7 @@ final class SummariesCubit extends Cubit<SummariesState> {
       });
 
       return totalDurationInHours.to2Decimals();
-    });
+    }).getOrDefault(0);
 
     return Summary(
       stepsCount: stepsCount,
