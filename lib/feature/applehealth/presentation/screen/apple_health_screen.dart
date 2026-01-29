@@ -70,10 +70,7 @@ class _AppleHealthScreenState extends State<AppleHealthScreen> {
                   Text(
                     _permissionsDeclaration,
                     textAlign: TextAlign.center,
-                    style: context.typography.titleLarge?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: context.typography.bodyLarge,
                   ),
                   SizedBox(height: 8),
                   Text(

@@ -21,7 +21,7 @@ class AppleHealthCubit extends Cubit<AppleHealthState> {
   }
 
   void onAllowAccessClick() {
-    RookAppleHealthRepository.requestPermissions([])
+    RookAppleHealthRepository.requestPermissions(_applePermissions)
         .then((_) {
           emit(state.copyWith(hasAskedForPermissions: true));
         })
