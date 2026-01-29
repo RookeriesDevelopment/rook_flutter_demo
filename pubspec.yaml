@@ -30,6 +30,7 @@ dependencies:
   app_settings: ^6.1.1
   url_launcher_android: 6.3.12
   url_launcher: 6.3.2
+  material_symbols_icons: ^4.2892.0
 
 dev_dependencies:
   flutter_test:

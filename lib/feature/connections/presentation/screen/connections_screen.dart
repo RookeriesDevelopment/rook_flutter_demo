@@ -156,7 +156,9 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 16),
                         alignment: Alignment.centerRight,
-                        child: NextButton(onClick: () {}),
+                        child: NextButton(onClick: () {
+                          context.push("/home");
+                        }),
                       ),
                     if (showNextButton) SizedBox(height: 8),
                   ],
