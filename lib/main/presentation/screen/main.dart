@@ -21,12 +21,15 @@ import 'package:rook_flutter_demo/feature/connections/presentation/screen/connec
 import 'package:rook_flutter_demo/feature/connections/presentation/screen/connections_screen.dart';
 import 'package:rook_flutter_demo/feature/healthconnect/presentation/screen/health_connect_cubit.dart';
 import 'package:rook_flutter_demo/feature/healthconnect/presentation/screen/health_connect_screen.dart';
+import 'package:rook_flutter_demo/feature/home/presentation/screen/home_screen.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_cubit.dart';
 import 'package:rook_flutter_demo/feature/login/presentation/screen/login_screen.dart';
 import 'package:rook_flutter_demo/feature/postsplash/presentation/screen/post_splash_screen.dart';
 import 'package:rook_flutter_demo/feature/privacy/presentation/screen/privacy_policy_screen.dart';
 import 'package:rook_flutter_demo/feature/samsunghealth/presentation/screen/samsung_health_cubit.dart';
 import 'package:rook_flutter_demo/feature/samsunghealth/presentation/screen/samsung_health_screen.dart';
+import 'package:rook_flutter_demo/feature/settings/presentation/screen/settings_cubit.dart';
+import 'package:rook_flutter_demo/feature/summaries/presentation/screen/summaries_cubit.dart';
 import 'package:rook_flutter_demo/feature/welcome/presentation/screen/welcome_screen.dart';
 import 'package:rook_flutter_demo/main/presentation/screen/main_cubit.dart';
 import 'package:rook_flutter_demo/rook/repository/rook_apple_health_repository.dart';
@@ -231,6 +234,22 @@ final _router = GoRouter(
           );
         },
         child: AppleHealthScreen(),
+      ),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => SummariesCubit()),
+          BlocProvider(
+            create: (context) => SettingsCubit(
+              logger: context.read<Logger>(),
+              preferences: context.read<AppPreferences>(),
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+        ],
+        child: HomeScreen(),
       ),
     ),
   ],
