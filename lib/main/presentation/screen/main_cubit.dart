@@ -22,8 +22,12 @@ class MainCubit extends Cubit<MainState> {
   Future<void> init() async {
     emit(MainState.unknown());
 
-    await _initSDKs();
-    await _initUsersIfNecessary();
+    await _initSDKs().catchError((error) {
+      _logger.e("Error initializing SDKs", error: error);
+    });
+    await _initUsersIfNecessary().catchError((error) {
+      _logger.e("Error initializing Users", error: error);
+    });
   }
 
   Future<void> _initSDKs() async {
@@ -33,6 +37,7 @@ class MainCubit extends Cubit<MainState> {
     final environment = RookEnvironment.sandbox;
 
     if (clientUUID == null || secretKey == null) {
+      _logger.e("Missing clientUUID or secretKey");
       return;
     }
 
@@ -47,14 +52,9 @@ class MainCubit extends Cubit<MainState> {
       await RookHealthRepository.enableNativeLogs();
     }
 
-    await RookHealthRepository.initRook(configuration).fold(
-      (value) async {
-        _logger.i("All SDKs initialized");
-      },
-      (error) async {
-        _logger.e("Error initializing SDKs", error: error);
-      },
-    );
+    await RookHealthRepository.initRook(configuration).then((value) {
+      _logger.i("Rook SDKs initialized");
+    });
   }
 
   Future<void> _initUsersIfNecessary() async {
