@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
+import 'package:material_symbols_icons/material_symbols_icons.dart';
 import 'package:rook_flutter_demo/core/presentation/extension/build_context_extensions.dart';
 import 'package:rook_flutter_demo/main/domain/enum/AuthenticationStatus.dart';
 import 'package:rook_flutter_demo/main/domain/model/main_state.dart';
@@ -29,7 +30,7 @@ class PostSplashScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.monitor_heart_rounded, size: 80),
+              Icon(Symbols.ecg_heart_rounded, size: 80),
               SizedBox(height: 32),
               LinearProgressIndicator(
                 minHeight: 12,
