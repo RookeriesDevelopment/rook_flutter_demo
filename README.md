@@ -2,15 +2,11 @@
 
 Demo app for rook_sdk_apple_health, rook_sdk_health_connect and rook_sdk_samsung_health.
 
-## Getting Started
+## Configuration
 
-This project is a starting point for a Flutter application.
+In the root folder create a `.env` file with the following properties:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```properties
+clientUUID="clientUUID"
+secretKey="secretKey"
+```
