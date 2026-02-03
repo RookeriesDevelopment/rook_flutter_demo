@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:rook_flutter_demo/core/domain/preferences/app_preferences.dart';
@@ -48,17 +50,21 @@ class SettingsCubit extends Cubit<SettingsState> {
     // RookSamsungHealthRepository.disableBackground() and RookAppleHealthRepository.disableBackground()
     // is enough to stop sending data (assuming you don't perform any manual sync).
 
-    // Disable background sync for Health Connect
-    await RookHealthConnectRepository.disableBackground();
+    if (Platform.isAndroid) {
+      // Disable background sync for Health Connect
+      await RookHealthConnectRepository.disableBackground();
 
-    // Disable background sync for Android Steps
-    await RookStepsRepository.disableBackground();
+      // Disable background sync for Android Steps
+      await RookStepsRepository.disableBackground();
 
-    // Disable background sync for Samsung Health
-    await RookSamsungHealthRepository.disableBackground();
+      // Disable background sync for Samsung Health
+      await RookSamsungHealthRepository.disableBackground();
+    }
 
-    // Disable background sync for Apple Health
-    await RookAppleHealthRepository.disableBackground();
+    if (Platform.isIOS) {
+      // Disable background sync for Apple Health
+      await RookAppleHealthRepository.disableBackground();
+    }
 
     // Logout from all SDKs
     await RookHealthRepository.deleteUserFromRook();
