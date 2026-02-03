@@ -24,6 +24,8 @@ class RookSamsungHealthRepository {
     final androidInfo = await deviceInfo.androidInfo;
     final androidVersion = androidInfo.version;
 
+    // On version 1.1.0 or lower samsung health is compatible with SDK 26 (Android 8)
+    // Future versions will only support SDK 29+ (Android 10). https://developer.samsung.com/health/data/overview.html#Restrictions
     return androidVersion.sdkInt >= 29;
   }
 
