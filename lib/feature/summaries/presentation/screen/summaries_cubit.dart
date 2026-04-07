@@ -62,15 +62,11 @@ final class SummariesCubit extends Cubit<SummariesState> {
 
     final today = DateTime.now();
 
-    final stepsCount = (await RookHealthConnectRepository.getTodayStepsCount()) ?? 0;
+    final stepsCount = await RookHealthConnectRepository.getTodayStepsCount();
 
     final caloriesCount = await RookHealthConnectRepository.getTodayCaloriesCount().then((
       calories,
     ) {
-      if (calories == null) {
-        return 0;
-      }
-
       final active = calories.active ?? 0;
       final basal = calories.basal ?? 0;
 
@@ -116,15 +112,11 @@ final class SummariesCubit extends Cubit<SummariesState> {
 
     final today = DateTime.now();
 
-    final stepsCount = (await RookSamsungHealthRepository.getTodayStepsCount()) ?? 0;
+    final stepsCount = await RookSamsungHealthRepository.getTodayStepsCount();
 
     final caloriesCount = await RookSamsungHealthRepository.getTodayCaloriesCount().then((
       calories,
     ) {
-      if (calories == null) {
-        return 0;
-      }
-
       final active = calories.active ?? 0;
       final basal = calories.basal ?? 0;
 
@@ -170,12 +162,9 @@ final class SummariesCubit extends Cubit<SummariesState> {
 
     final today = DateTime.now();
 
-    final stepsCount = await RookAppleHealthRepository.getTodayStepsCount().getOrDefault(0) ?? 0;
+    final stepsCount = await RookAppleHealthRepository.getTodayStepsCount().getOrDefault(0);
 
     final caloriesCount = await RookAppleHealthRepository.getTodayCaloriesCount().then((calories) {
-      if (calories == null) {
-        return 0;
-      }
 
       final active = calories.active ?? 0;
       final basal = calories.basal ?? 0;

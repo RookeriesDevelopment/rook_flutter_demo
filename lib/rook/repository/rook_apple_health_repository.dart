@@ -39,11 +39,11 @@ class RookAppleHealthRepository {
     return AHRookSyncManager.getSleepSummary(date);
   }
 
-  static Future<PhysicalSummary?> getPhysicalSummary(DateTime date) {
+  static Future<PhysicalSummary> getPhysicalSummary(DateTime date) {
     return AHRookSyncManager.getPhysicalSummary(date);
   }
 
-  static Future<BodySummary?> getBodySummary(DateTime date) {
+  static Future<BodySummary> getBodySummary(DateTime date) {
     return AHRookSyncManager.getBodySummary(date);
   }
 
@@ -51,11 +51,11 @@ class RookAppleHealthRepository {
     return AHRookSyncManager.getActivityEvents(date);
   }
 
-  static Future<int?> getTodayStepsCount() {
+  static Future<int> getTodayStepsCount() {
     return AHRookSyncManager.getTodayStepsCount();
   }
 
-  static Future<DailyCalories?> getTodayCaloriesCount() {
+  static Future<DailyCalories> getTodayCaloriesCount() {
     return AHRookSyncManager.getTodayCaloriesCount();
   }
 

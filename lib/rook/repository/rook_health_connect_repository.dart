@@ -76,11 +76,11 @@ class RookHealthConnectRepository {
     return HCRookSyncManager.getSleepSummary(date);
   }
 
-  static Future<PhysicalSummary?> getPhysicalSummary(DateTime date) {
+  static Future<PhysicalSummary> getPhysicalSummary(DateTime date) {
     return HCRookSyncManager.getPhysicalSummary(date);
   }
 
-  static Future<BodySummary?> getBodySummary(DateTime date) {
+  static Future<BodySummary> getBodySummary(DateTime date) {
     return HCRookSyncManager.getBodySummary(date);
   }
 
@@ -88,22 +88,12 @@ class RookHealthConnectRepository {
     return HCRookSyncManager.getActivityEvents(date);
   }
 
-  static Future<int?> getTodayStepsCount() {
-    return HCRookSyncManager.getTodayStepsCount().then((syncStatus) {
-      return switch (syncStatus) {
-        Synced(data: final int value) => value,
-        _ => null,
-      };
-    });
+  static Future<int> getTodayStepsCount() {
+    return HCRookSyncManager.getTodayStepsCount();
   }
 
-  static Future<DailyCalories?> getTodayCaloriesCount() {
-    return HCRookSyncManager.getTodayCaloriesCount().then((syncStatus) {
-      return switch (syncStatus) {
-        Synced(data: final DailyCalories value) => value,
-        _ => null,
-      };
-    });
+  static Future<DailyCalories> getTodayCaloriesCount() {
+    return HCRookSyncManager.getTodayCaloriesCount();
   }
 
   static Stream<bool> get isScheduledUpdates {

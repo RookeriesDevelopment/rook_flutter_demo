@@ -90,22 +90,12 @@ class RookSamsungHealthRepository {
     return RookSamsung.getActivityEvents(date);
   }
 
-  static Future<int?> getTodayStepsCount() {
-    return RookSamsung.getTodayStepsCount().then((syncStatus) {
-      return switch (syncStatus) {
-        Synced(data: final int value) => value,
-        _ => null,
-      };
-    });
+  static Future<int> getTodayStepsCount() {
+    return RookSamsung.getTodayStepsCount();
   }
 
-  static Future<DailyCalories?> getTodayCaloriesCount() {
-    return RookSamsung.getTodayCaloriesCount().then((syncStatus) {
-      return switch (syncStatus) {
-        Synced(data: final DailyCalories value) => value,
-        _ => null,
-      };
-    });
+  static Future<DailyCalories> getTodayCaloriesCount() {
+    return RookSamsung.getTodayCaloriesCount();
   }
 
   static Stream<bool> get isScheduledUpdates {
