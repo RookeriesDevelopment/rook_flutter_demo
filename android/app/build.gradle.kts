@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "io.tryrook.rook_flutter_demo"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "io.tryrook.rook_flutter_demo"
-        minSdk = 26
-        targetSdk = 35
+        minSdk = 29
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -45,10 +45,7 @@ android {
     }
 
     dependencies {
-        implementation(files("$rootDir/libs/samsung-health-data-api-1.0.0-b2.aar"))
-
-        // Used by Samsung Health Data AAR:
-        implementation("com.google.code.gson:gson:2.13.0")
+        implementation(files("$rootDir/libs/samsung-health-data-api-1.0.0.aar"))
     }
 }
 

@@ -12,19 +12,23 @@ import 'package:rook_flutter_demo/rook/repository/rook_health_connect_repository
 import 'package:rook_flutter_demo/rook/repository/rook_health_repository.dart';
 import 'package:rook_flutter_demo/rook/repository/rook_samsung_health_repository.dart';
 import 'package:rook_flutter_demo/rook/repository/rook_steps_repository.dart';
+import 'package:rook_sdk_core/rook_sdk_core.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   final Logger _logger;
   final AppPreferences _preferences;
   final AuthRepository _authRepository;
+  final RookApiHealthRepository _apiHealthRepository;
 
   SettingsCubit({
     required Logger logger,
     required AppPreferences preferences,
     required AuthRepository authRepository,
+    required RookApiHealthRepository apiHealthRepository,
   }) : _logger = logger,
        _preferences = preferences,
        _authRepository = authRepository,
+       _apiHealthRepository = apiHealthRepository,
        super(SettingsState());
 
   void onLogOutClick() {
@@ -41,7 +45,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     //
     // You should call revoke only on data sources that are actually connected
     for (final dataSource in disconnectableApiDataSources) {
-      await RookApiHealthRepository.revokeDataSource(dataSource);
+      await _apiHealthRepository.revokeDataSource(dataSource);
     }
 
     // Logout from health kits
@@ -82,11 +86,11 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 }
 
-const List<String> disconnectableApiDataSources = [
-  "Oura",
-  "Polar",
-  "Whoop",
-  "Fitbit",
-  "Garmin",
-  "Withings",
+const List<DataSourceType> disconnectableApiDataSources = [
+  DataSourceType.oura,
+  DataSourceType.polar,
+  DataSourceType.whoop,
+  DataSourceType.fitbit,
+  DataSourceType.garmin,
+  DataSourceType.withings,
 ];

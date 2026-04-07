@@ -32,6 +32,7 @@ import 'package:rook_flutter_demo/feature/settings/presentation/screen/settings_
 import 'package:rook_flutter_demo/feature/summaries/presentation/screen/summaries_cubit.dart';
 import 'package:rook_flutter_demo/feature/welcome/presentation/screen/welcome_screen.dart';
 import 'package:rook_flutter_demo/main/presentation/screen/main_cubit.dart';
+import 'package:rook_flutter_demo/rook/repository/rook_api_health_repository.dart';
 import 'package:rook_flutter_demo/rook/repository/rook_apple_health_repository.dart';
 import 'package:rook_flutter_demo/rook/repository/rook_health_connect_repository.dart';
 import 'package:rook_flutter_demo/rook/repository/rook_samsung_health_repository.dart';
@@ -148,6 +149,11 @@ class _DemoAppState extends State<DemoApp> {
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<AuthRepository>(create: (context) => DefaultAuthRepository()),
+          RepositoryProvider<RookApiHealthRepository>(
+            create: (context) {
+              return RookApiHealthRepository(authRepository: context.read<AuthRepository>());
+            },
+          ),
         ],
         child: MaterialApp.router(
           title: 'DemoApp',
@@ -192,7 +198,11 @@ final _router = GoRouter(
       path: '/connections',
       builder: (context, state) => BlocProvider(
         create: (context) {
-          return ConnectionsCubit(preferences: context.read<AppPreferences>());
+          return ConnectionsCubit(
+            logger: context.read<Logger>(),
+            preferences: context.read<AppPreferences>(),
+            apiHealthRepository: context.read<RookApiHealthRepository>(),
+          );
         },
         child: ConnectionsScreen(),
       ),
@@ -246,6 +256,7 @@ final _router = GoRouter(
               logger: context.read<Logger>(),
               preferences: context.read<AppPreferences>(),
               authRepository: context.read<AuthRepository>(),
+              apiHealthRepository: context.read<RookApiHealthRepository>(),
             ),
           ),
         ],

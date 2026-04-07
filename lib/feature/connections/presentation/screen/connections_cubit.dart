@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:logger/logger.dart';
 import 'package:rook_flutter_demo/core/domain/future/delay.dart';
 import 'package:rook_flutter_demo/core/domain/preferences/app_preferences.dart';
 import 'package:rook_flutter_demo/feature/connections/domain/enum/health_kit_type.dart';
@@ -14,11 +15,18 @@ import 'package:rook_flutter_demo/rook/repository/rook_samsung_health_repository
 import 'package:rook_flutter_demo/rook/repository/rook_steps_repository.dart';
 
 class ConnectionsCubit extends Cubit<ConnectionsState> {
+  final Logger _logger;
   final AppPreferences _preferences;
+  final RookApiHealthRepository _apiHealthRepository;
 
-  ConnectionsCubit({required AppPreferences preferences})
-    : _preferences = preferences,
-      super(ConnectionsState()) {
+  ConnectionsCubit({
+    required Logger logger,
+    required AppPreferences preferences,
+    required RookApiHealthRepository apiHealthRepository,
+  }) : _logger = logger,
+       _preferences = preferences,
+       _apiHealthRepository = apiHealthRepository,
+       super(ConnectionsState()) {
     onConnectionsRefresh();
   }
 
@@ -43,9 +51,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
       _connectApi(connection).catchError((error) {
         emit(
           state.copyWith(
-            connectionStatus: ConnectionError(
-              "Failed to connect ${connection.name}: $error",
-            ),
+            connectionStatus: ConnectionError("Failed to connect ${connection.name}: $error"),
           ),
         );
       });
@@ -95,8 +101,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
     }
 
     try {
-      final dataSources =
-          await RookApiHealthRepository.getAuthorizedDataSourcesV2();
+      final dataSources = await _apiHealthRepository.getAuthorizedDataSourcesV2();
 
       final connections = <String, ConnectionApi>{};
 
@@ -112,13 +117,9 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
         );
       }
 
-      emit(
-        state.copyWith(
-          loadingApi: false,
-          connectionsApi: connections.values.toList(),
-        ),
-      );
+      emit(state.copyWith(loadingApi: false, connectionsApi: connections.values.toList()));
     } catch (error) {
+      _logger.e("Failed to load API connections: $error");
       emit(state.copyWith(errorApi: true, loadingApi: false));
     }
   }
@@ -126,7 +127,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
   Future<void> _connectApi(ConnectionApi connection) async {
     emit(state.copyWith(loadingApi: true));
 
-    final authorizer = await RookApiHealthRepository.getDataSourceAuthorizer(
+    final authorizer = await _apiHealthRepository.getDataSourceAuthorizer(
       connection.name,
       homePageUrl,
     );
@@ -146,9 +147,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
         ),
       );
     } else {
-      emit(
-        state.copyWith(connectionStatus: AlreadyConnected(), loadingApi: false),
-      );
+      emit(state.copyWith(connectionStatus: AlreadyConnected(), loadingApi: false));
 
       // Data source is already connected, refresh to fetch latest changes.
       _loadApiConnections();
@@ -165,7 +164,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
 
     emit(state.copyWith(loadingApi: true));
 
-    await RookApiHealthRepository.revokeDataSource(disconnectionType);
+    await _apiHealthRepository.revokeDataSource(disconnectionType);
 
     emit(state.copyWith(disconnectionStatus: Disconnected()));
 
@@ -175,22 +174,20 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
   Future<void> _loadHealthKitConnections() async {
     emit(state.copyWith(loadingHK: true, errorHK: false));
 
-    final appleHealthAvailable =
-        await RookAppleHealthRepository.isCompatibleWithCurrentPlatform();
+    final appleHealthAvailable = await RookAppleHealthRepository.isCompatibleWithCurrentPlatform();
     final healthConnectAvailable =
         await RookHealthConnectRepository.isCompatibleWithCurrentPlatform();
     final samsungHealthAvailable =
         await RookSamsungHealthRepository.isCompatibleWithCurrentPlatform();
-    final androidStepsAvailable =
-        await RookStepsRepository.isCompatibleWithCurrentPlatform();
+    final androidStepsAvailable = await RookStepsRepository.isCompatibleWithCurrentPlatform();
 
     bool appleHealthEnabled = false;
 
     if (appleHealthAvailable) {
       try {
-        appleHealthEnabled =
-            await RookAppleHealthRepository.isBackgroundEnabled();
+        appleHealthEnabled = await RookAppleHealthRepository.isBackgroundEnabled();
       } catch (error) {
+        _logger.e("Failed to check Apple Health connections: $error");
         emit(state.copyWith(errorHK: true));
       }
     }
@@ -199,9 +196,9 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
 
     if (healthConnectAvailable) {
       try {
-        healthConnectEnabled =
-            await RookHealthConnectRepository.isBackgroundEnabled();
+        healthConnectEnabled = await RookHealthConnectRepository.isBackgroundEnabled();
       } catch (error) {
+        _logger.e("Failed to check Health Connect connection: $error");
         emit(state.copyWith(errorHK: true));
       }
     }
@@ -210,9 +207,9 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
 
     if (samsungHealthAvailable) {
       try {
-        samsungHealthEnabled =
-            await RookSamsungHealthRepository.isBackgroundEnabled();
+        samsungHealthEnabled = await RookSamsungHealthRepository.isBackgroundEnabled();
       } catch (error) {
+        _logger.e("Failed to check Samsung Health connection: $error");
         emit(state.copyWith(errorHK: true));
       }
     }
@@ -223,6 +220,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
       try {
         androidStepsEnabled = await RookStepsRepository.isBackgroundEnabled();
       } catch (error) {
+        _logger.e("Failed to check Android Steps connection: $error");
         emit(state.copyWith(errorHK: true));
       }
     }
@@ -230,9 +228,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
     final connections = <String, ConnectionHealthKit>{};
 
     if (appleHealthAvailable) {
-      connections["Apple Health"] = ConnectionHealthKit.appleHealth(
-        connected: appleHealthEnabled,
-      );
+      connections["Apple Health"] = ConnectionHealthKit.appleHealth(connected: appleHealthEnabled);
     }
 
     if (healthConnectAvailable) {
@@ -253,12 +249,7 @@ class ConnectionsCubit extends Cubit<ConnectionsState> {
       );
     }
 
-    emit(
-      state.copyWith(
-        loadingHK: false,
-        connectionsHK: connections.values.toList(),
-      ),
-    );
+    emit(state.copyWith(loadingHK: false, connectionsHK: connections.values.toList()));
   }
 
   Future<void> _disconnectHealthKit(ConnectionHealthKit connection) async {

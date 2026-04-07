@@ -8,5 +8,10 @@ In the root folder create a `.env` file with the following properties:
 
 ```properties
 clientUUID="clientUUID"
-secretKey="secretKey"
+packageName="packageName"
+bundleId="bundleId"
+secret="secret_word"
 ```
+
+> [!IMPORTANT]
+> Don't forget to also register your packageName, bundleId and secret in the ROOK portal.

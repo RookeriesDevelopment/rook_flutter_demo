@@ -17,11 +17,33 @@ class RookHealthRepository {
     }
   }
 
-  static Future<void> initRook(RookConfiguration configuration) async {
+  static Future<void> initRook(
+    String clientUUID,
+    String secret,
+    RookEnvironment environment,
+    String packageName,
+    String bundleId,
+  ) async {
     if (Platform.isIOS) {
+      final configuration = RookConfiguration(
+        clientUUID: clientUUID,
+        secret: secret,
+        environment: environment,
+        appId: bundleId,
+        enableBackgroundSync: false,
+      );
+
       await AHRookConfigurationManager.setConfiguration(configuration);
       await AHRookConfigurationManager.initRook();
     } else {
+      final configuration = RookConfiguration(
+        clientUUID: clientUUID,
+        secret: secret,
+        environment: environment,
+        appId: packageName,
+        enableBackgroundSync: false,
+      );
+
       await HCRookConfigurationManager.setConfiguration(configuration);
       await HCRookConfigurationManager.initRook();
       await RookSamsung.initRook(configuration);
@@ -62,15 +84,6 @@ class RookHealthRepository {
     } else {
       await HCRookConfigurationManager.syncUserTimeZone();
       await RookSamsung.syncUserTimeZone();
-    }
-  }
-
-  static Future<void> clearUserID() async {
-    if (Platform.isIOS) {
-      return AHRookConfigurationManager.clearUserID();
-    } else {
-      await HCRookConfigurationManager.clearUserID();
-      await RookSamsung.clearUserID();
     }
   }
 

@@ -71,8 +71,11 @@ final class SummariesCubit extends Cubit<SummariesState> {
         return 0;
       }
 
+      final active = calories.active ?? 0;
+      final basal = calories.basal ?? 0;
+
       // Get total calories by adding active and basal calories
-      return (calories.active + calories.basal).round();
+      return (active + basal).round();
     });
 
     final sleepDurationInHours = await RookHealthConnectRepository.getSleepSummary(today).then((
@@ -122,8 +125,11 @@ final class SummariesCubit extends Cubit<SummariesState> {
         return 0;
       }
 
+      final active = calories.active ?? 0;
+      final basal = calories.basal ?? 0;
+
       // Get total calories by adding active and basal calories
-      return (calories.active + calories.basal).round();
+      return (active + basal).round();
     });
 
     final sleepDurationInHours = await RookSamsungHealthRepository.getSleepSummary(today).then((
@@ -171,8 +177,11 @@ final class SummariesCubit extends Cubit<SummariesState> {
         return 0;
       }
 
+      final active = calories.active ?? 0;
+      final basal = calories.basal ?? 0;
+
       // Get total calories by adding active and basal calories
-      return (calories.active + calories.basal).round();
+      return (active + basal).round();
     }).getOrDefault(0);
 
     final sleepDurationInHours = await RookAppleHealthRepository.getSleepSummary(today).then((

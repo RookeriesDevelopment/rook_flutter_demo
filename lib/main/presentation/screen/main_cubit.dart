@@ -33,26 +33,27 @@ class MainCubit extends Cubit<MainState> {
   Future<void> _initSDKs() async {
     await dotenv.load();
     final clientUUID = dotenv.env['clientUUID'];
-    final secretKey = dotenv.env['secretKey'];
+    final packageName = dotenv.env['packageName'];
+    final bundleId = dotenv.env['bundleId'];
+    final secret = dotenv.env['secret'];
     final environment = RookEnvironment.sandbox;
 
-    if (clientUUID == null || secretKey == null) {
-      _logger.e("Missing clientUUID or secretKey");
+    if (clientUUID == null || packageName == null || bundleId == null || secret == null) {
+      _logger.e("Missing clientUUID, packageName, bundleId or secret");
       return;
     }
-
-    final configuration = RookConfiguration(
-      clientUUID: clientUUID,
-      secretKey: secretKey,
-      environment: environment,
-      enableBackgroundSync: false,
-    );
 
     if (kDebugMode) {
       await RookHealthRepository.enableNativeLogs();
     }
 
-    await RookHealthRepository.initRook(configuration).then((value) {
+    await RookHealthRepository.initRook(
+      clientUUID,
+      secret,
+      environment,
+      packageName,
+      bundleId,
+    ).then((value) {
       _logger.i("Rook SDKs initialized");
     });
   }

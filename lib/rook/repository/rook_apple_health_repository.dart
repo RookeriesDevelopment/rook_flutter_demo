@@ -63,22 +63,8 @@ class RookAppleHealthRepository {
     return AHRookBackgroundSync.isScheduled();
   }
 
-  static Future<void> enableBackground(bool enableNativeLogs) async {
-    await dotenv.load();
-    final clientUUID = dotenv.env['clientUUID'];
-    final secretKey = dotenv.env['secretKey'];
-    final environment = RookEnvironment.sandbox;
-
-    if (clientUUID == null || secretKey == null) {
-      throw Exception("Missing environment variables: clientUUID, secretKey");
-    }
-
-    return AHRookBackgroundSync.enableBackground(
-      enableNativeLogs: enableNativeLogs,
-      clientUUID: clientUUID,
-      secretKey: secretKey,
-      environment: environment,
-    );
+  static Future<void> enableBackground(bool enableNativeLogs) {
+    return AHRookBackgroundSync.enableBackground(enableNativeLogs: enableNativeLogs);
   }
 
   static Future<void> disableBackground() {

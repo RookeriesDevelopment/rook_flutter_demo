@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:rook_flutter_demo/feature/connections/domain/enum/health_kit_type.dart';
+import 'package:rook_sdk_core/rook_sdk_core.dart';
 
 abstract interface class Connection {}
 
@@ -8,14 +9,14 @@ final class ConnectionApi extends Equatable implements Connection {
   final bool connected;
   final String iconUrl;
 
-  String? get disconnectionType {
+  DataSourceType? get disconnectionType {
     return switch (name) {
-      "Oura" => "Oura",
-      "Polar" => "Polar",
-      "Whoop" => "Whoop",
-      "Fitbit" => "Fitbit",
-      "Garmin" => "Garmin",
-      "Withings" => "Withings",
+      "Oura" => DataSourceType.oura,
+      "Polar" => DataSourceType.polar,
+      "Whoop" => DataSourceType.whoop,
+      "Fitbit" => DataSourceType.fitbit,
+      "Garmin" => DataSourceType.garmin,
+      "Withings" => DataSourceType.withings,
       _ => null,
     };
   }
