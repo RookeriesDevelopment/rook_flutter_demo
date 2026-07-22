@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rook_flutter_demo/core/domain/repository/auth_repository.dart';
@@ -15,17 +17,18 @@ class RookApiHealthRepository {
       await dotenv.load();
       final clientUUID = dotenv.env['clientUUID'];
       final packageName = dotenv.env['packageName'];
+      final bundleId = dotenv.env['bundleId'];
       final secret = dotenv.env['secret'];
       final environment = RookEnvironment.sandbox;
 
-      if (clientUUID == null || packageName == null || secret == null) {
+      if (clientUUID == null || packageName == null || bundleId == null || secret == null) {
         throw Exception("Missing clientUUID, packageName or secret");
       }
 
       _apiSources = RookApiSources(
         clientUUID: clientUUID,
         secret: secret,
-        appId: packageName,
+        appId: Platform.isIOS ? bundleId : packageName,
         environment: environment,
         enableLogs: kDebugMode,
       );

@@ -13,10 +13,10 @@ dependencies:
   go_router: ^17.0.0
   google_fonts: ^6.3.2
   shared_preferences: ^2.5.3
-  rook_sdk_core: ^4.0.0
-  rook_sdk_apple_health: ^4.0.0
-  rook_sdk_health_connect: ^4.0.0
-  rook_sdk_samsung_health: ^4.0.0
+  rook_sdk_core: ^4.1.1
+  rook_sdk_apple_health: ^4.1.0
+  rook_sdk_health_connect: ^4.1.0
+  rook_sdk_samsung_health: ^4.1.0
   receive_intent: ^0.2.7
   device_info_plus: ^11.5.0
   flutter_bloc: ^9.1.1
