@@ -10,8 +10,7 @@ class RookHealthRepository {
 
   static Future<void> enableNativeLogs() async {
     if (Platform.isIOS) {
-      // Will be fixed in next v4 release
-      AHRookConfigurationManager.enableNativeLogs();
+      await AHRookConfigurationManager.enableNativeLogs();
     } else {
       await HCRookConfigurationManager.enableNativeLogs();
       await RookSamsung.enableNativeLogs();
